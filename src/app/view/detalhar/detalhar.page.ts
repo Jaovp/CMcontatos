@@ -14,6 +14,7 @@ export class DetalharPage implements OnInit {
   contato: Contato;
   indice: number;
   edicao: boolean = true;
+  public imagem: any;
 
   constructor(private router: Router,
     private firebase: FirebaseService) { }
@@ -22,6 +23,7 @@ export class DetalharPage implements OnInit {
     this.contato = history.state.contato;
     this.nome = this.contato.nome;
     this.telefone = this.contato.telefone;
+    
   }
 
   habilitar(){
@@ -34,13 +36,23 @@ export class DetalharPage implements OnInit {
 
   editar(){
     let novo: Contato = new Contato(this.nome, this.telefone);
-    this.firebase.update(novo, this.contato.id);
+    novo.id = this.contato.id;
+    if(this.imagem){
+      this.firebase.uploadImage(this.imagem, novo);
+    }else{
+      novo.downloadURL = this.contato.downloadURL;
+      this.firebase.update(novo, this.contato.id)
+    }
     this.router.navigate(["/home"]);
   }
 
   excluir(){
     this.firebase.delete(this.contato);
     this.router.navigate(["/home"]);
+  }
+
+  public uploadFile(imagem: any){
+    this.imagem = imagem.files;
   }
 
 }

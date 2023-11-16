@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar color="primary">
     <ion-title>
       AGENDA DE CONTATOS
     </ion-title>
@@ -10,6 +10,9 @@
 
   <ion-list *ngFor="let contato of lista_contatos">
     <ion-item (click)="editar(contato)">
+      <ion-avatar slot="start">
+        <img src="{{contato.downloadURL}}"/>
+      </ion-avatar>
       <ion-label>{{contato.nome}}</ion-label>
     </ion-item>
   </ion-list>
