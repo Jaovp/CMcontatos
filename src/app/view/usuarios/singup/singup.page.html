@@ -17,11 +17,6 @@
       <span *ngIf="formLogar.get('senha')?.touched && formLogar.get('senha')?.errors?.['required']">Senha é Obrigatório!</span>
       <span *ngIf="formLogar.get('senha')?.dirty && formLogar.get('senha')?.errors?.['minlength']">A senha precisa ter no minimo 6 dígitos!</span>
       <ion-button  expand="full" color="success" type="submit">Entrar</ion-button>
-      <ion-button  expand="full" color="danger" (click)="logarComGoogle()">
-        Entrar com Google
-        <ion-icon slot="end" name="logo-google"></ion-icon>
-      </ion-button>
-      <a (click)="irParaSingUp()">Não tem Cadastro? Clique aqui!</a>
     </form>
   </ion-list>
 
