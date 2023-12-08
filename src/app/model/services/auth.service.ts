@@ -9,7 +9,7 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
 export class AuthService {
   usuarioDados: any;
 
-  constructor(private firebase: FirebaseService, private fireAuth: AngularFireAuth, private router: Router, private ngZone: NgZone) {
+  constructor(private firebase: FirebaseService, private fireAuth: AngularFireAuth, private ngZone: NgZone) {
     this.fireAuth.authState.subscribe(usuario => {
       if(usuario){
         this.usuarioDados = usuario;
@@ -21,18 +21,36 @@ export class AuthService {
    }
 
   //Login com Email e Senha
-   public signIn(email: string, password: string){}
+   public signIn(email: string, password: string){
+    return this.fireAuth.signInWithEmailAndPassword(email, password);
+   }
 
-   public signUpWithEmailPassword(email: string, password: string){}
+   public signUpWithEmailPassword(email: string, password: string){
+    return this.fireAuth.createUserWithEmailAndPassword(email, password);
+   }
 
-   public recoverPassword(email: string){}
+   public recoverPassword(email: string){
+    return this.fireAuth.sendPasswordResetEmail(email);
+   }
   
    //metodos gerais
-   public signOut(){}
+   public signOut(){
+    return this.fireAuth.signOut().then(() => {
+      localStorage.removeItem('usuario');
+    });
+   }
 
-   public getUserLogged(){}
+   public getUserLogged(){
+    const usuario = JSON.parse(localStorage.getItem('usuario') || 'null');
+    if(usuario !== null){
+      return usuario;
+    }else{
+      return null;
+    }
+   }
 
    public isLoggedIn(): boolean{
-      return false;
+    const usuario = JSON.parse(localStorage.getItem('usuario') || 'null');
+      return (usuario !== null) ? true : false;
    }
 }
