@@ -35,6 +35,7 @@ export class SinginPage implements OnInit {
       this.alert.presentAlert('Erro', 'Erro ao Preencher!');
       return false;
     }else{
+      this.alert.simpleLoader();
       this.logar();
       return true;
     }
@@ -43,10 +44,12 @@ export class SinginPage implements OnInit {
   private logar(){
     this.authService.signIn(this.formLogar.value['email'] , this.formLogar.value['senha'])
     .then((res) => {
+      this.alert.dismissLoader();
       this.alert.presentAlert('Olá','Seja Bem-Vindo!');
       this.router.navigate(["/home"]);
     })
     .catch((error) => {
+      this.alert.dismissLoader();
       this.alert.presentAlert('Erro ao Logar', 'Tente Novamente');
       console.log(error.message);
     });

@@ -37,6 +37,7 @@ export class SingupPage implements OnInit {
       this.alert.presentAlert('Erro', 'Erro ao Preencher!');
       return false;
     }else{
+      this.alert.simpleLoader();
       this.cadastrar();
       return true;
     }
@@ -45,10 +46,12 @@ export class SingupPage implements OnInit {
   private cadastrar(){
     this.authService.signUpWithEmailPassword(this.formCadastrar.value['email'] , this.formCadastrar.value['senha'])
     .then((res) => {
+      this.alert.dismissLoader();
       this.alert.presentAlert('Sucesso','Cadastrado com Sucesso!');
       this.router.navigate(["/singin"]);
     })
     .catch((error) => {
+      this.alert.dismissLoader();
       this.alert.presentAlert('Erro', 'Erro ao realizar Cadastro' );
       console.log(error.message);
     });
