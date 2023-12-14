@@ -53,7 +53,15 @@ export class SinginPage implements OnInit {
   }
 
   logarComGoogle(){
-
+    this.authService.signInWithGoogle()
+    .then((res) => {
+      this.alert.presentAlert('Olá','Seja Bem-Vindo!');
+      this.router.navigate(["/home"]);
+    })
+    .catch((error) => {
+      this.alert.presentAlert('Erro ao Logar', 'Tente Novamente');
+      console.log(error.message);
+    });
   }
 
   irParaSingUp(){
